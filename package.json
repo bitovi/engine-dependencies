@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/bitovi/engine-dependencies/issues"
   },
-  "homepage": "https://github.com/bitovi/engine-dependencies"
+  "homepage": "https://github.com/bitovi/engine-dependencies",
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
 }
