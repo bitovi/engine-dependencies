@@ -1,6 +1,7 @@
 var semver = require("semver");
 var spawn = require("child_process").spawn;
 var findupNodeModules = require("findup-node-modules");
+var path = require("path");
 
 module.exports = engineDependencies;
 
@@ -25,6 +26,10 @@ function engineDependencies(options, moduleName, callback){
 	if(moduleName) {
 		// If we are inside a node_modules folder then do not install them.
 		installDevDependencies = !findupNodeModules(moduleName);
+		// We might be in the root folder for the project, check that
+		if(!installDevDependencies) {
+			installDevDependencies = path.dirname(process.cwd()) === moduleName;
+		}
 	}
 
 	// Get the package.json engineDependencies
