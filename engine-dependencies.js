@@ -100,7 +100,10 @@ function mapOf(obj, callback){
 
 function thunkAll(thunks, callback){
 	var thunk = thunks.shift();
-	if(!thunk) callback();
+	if(!thunk) {
+		callback();
+		return;
+	}
 
 	thunk(function(err){
 		if(err) {

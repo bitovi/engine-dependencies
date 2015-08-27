@@ -6,5 +6,12 @@ var moduleName = argv[2];
 if(!moduleName && argv[1][0] !== "/") {
 	moduleName = argv[1];
 }
+if(!moduleName) {
+	try {
+		moduleName = require(process.cwd() + "/package.json").engineDependencies;
+	} catch(e) {
+		moduleName = {};
+	}
+}
 
 engineDependencies(moduleName);
