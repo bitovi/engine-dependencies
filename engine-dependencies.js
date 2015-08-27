@@ -1,3 +1,6 @@
+var semver = require("semver");
+var spawn = require("child_process").spawn;
+var findupNodeModules = require("findup-node-modules");
 
 module.exports = engineDependencies;
 
@@ -5,10 +8,32 @@ var apps = { node: true, iojs: true };
 var depTypes = { dependencies: true, devDependencies: true };
 
 var engineVersion = process.version;
-var app;
+var app = engineVersion.substr(0, 3) === "v0." ? "node" : "iojs";
 
-function engineDependencies(options){
-	// TODO get options from package.json engineDependencies
+function engineDependencies(options, moduleName, callback){
+	if(typeof options === "string") {
+		moduleName = options;
+		options = undefined;
+	}
+	if(typeof moduleName === "function") {
+		callback = moduleName;
+		moduleName = undefined;
+	}
+
+	// First see if we are in production
+	var installDevDependencies = process.env.NODE_ENV !== "production";
+	if(moduleName) {
+		// If we are inside a node_modules folder then do not install them.
+		installDevDependencies = !findupNodeModules(moduleName);
+	}
+
+	// Get the package.json engineDependencies
+	if(!options) {
+		var cwd = findupNodeModules(moduleName) || process.cwd();
+		var pkg = require(cwd + "/package.json");
+		options = pkg.engineDependencies;
+	}
+
 	var dependencies;
 	var devDependencies;
 
@@ -18,7 +43,7 @@ function engineDependencies(options){
 	});
 
 	var dependencyOptions = findWhere(engineOptions, function(engineOption){
-		return isCompatible(engineOption, engineVersion);
+		return semver.satisfies(engineVersion, engineOption);
 	});
 
 	// Check to see if this is just version numbers or not
@@ -36,8 +61,7 @@ function engineDependencies(options){
 		installs = mapOf(dependencies, npmInstall);
 	}
 
-	// TODO how do I know if I need to install devDependencies?
-	if(devDepencencies && false) {
+	if(devDependencies && installDevDependencies) {
 		var devInstalls = mapOf(devDependencies, npmInstall);
 		installs = installs.concat(devInstalls);
 	}
@@ -45,7 +69,8 @@ function engineDependencies(options){
 	// Now installs is an array of thunks that will npm install stuff.
 	// go through it one-at-a-time and install them all.
 	thunkAll(installs, function(err){
-		// TODO should be done, check for the error
+		// Should be done, check for the error
+		callback && callback(err);
 	});
 };
 
@@ -73,11 +98,6 @@ function mapOf(obj, callback){
 	return results;
 }
 
-// TODO make this work
-function isCompatible(){
-	return true;
-}
-
 function thunkAll(thunks, callback){
 	var thunk = thunks.shift();
 	if(!thunk) callback();
@@ -91,8 +111,12 @@ function thunkAll(thunks, callback){
 }
 
 function npmInstall(packageName, packageVersion){
-	// TODO do an actual npm Install
-	return function(){
-
+	return function(done){
+		var installString = packageName + "@" + packageVersion;
+		var args = ["install", installString];
+		var child = spawn("npm", args);
+		child.stdout.pipe(process.stdout);
+		child.stderr.pipe(process.stderr);
+		child.on("exit", done);
 	};
 }

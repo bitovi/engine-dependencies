@@ -23,5 +23,9 @@
   "homepage": "https://github.com/bitovi/engine-dependencies",
   "devDependencies": {
     "mocha": "^2.2.5"
+  },
+  "dependencies": {
+    "findup-node-modules": "^0.1.1",
+    "semver": "^5.0.1"
   }
 }
