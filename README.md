@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/bitovi/engine-dependencies.svg?branch=master)](https://travis-ci.org/bitovi/engine-dependencies)
+[![npm version](https://badge.fury.io/js/engine-dependencies.svg)](http://badge.fury.io/js/engine-dependencies)
+
 # engine-dependencies
 
 Specify package dependencies based on what version of Node you are using. Useful if you're trying to support Node 0.10.x, 0.12.x and IO.js.
