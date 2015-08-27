@@ -5,6 +5,49 @@
 
 Specify package dependencies based on what version of Node you are using. Useful if you're trying to support Node 0.10.x, 0.12.x and IO.js.
 
+## CLI
+
+You can use engine-dependencies within your process as a post-install script. Just define your dependencies in the `engineDependencies` field of your package.json:
+
+```json
+{
+	"name": "my-lib",
+	"version": "1.0.0",
+	"engineDependencies": {
+		"node": {
+			"0.12.x": {
+				"devDependencies": {
+					"semver": "^1.0.0"
+				}
+			}
+		},
+		"iojs": {
+			"^3.0.0": {
+				"semver": "2.0.0"
+			}
+		}
+	}
+	...
+}
+```
+
+And then add to your scripts:
+
+```json
+{
+	"name": "my-lib",
+	"version": "1.0.0",
+	"scripts": {
+		"post-install": {
+			"install-engine-dependencies 'my-lib'"
+		}
+	}
+	...
+}
+```
+
+## Node API
+
 ```js
 engineDependencies({
 	"node": {
