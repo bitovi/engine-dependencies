@@ -112,6 +112,8 @@ function thunkAll(thunks, callback){
 
 function npmInstall(packageName, packageVersion){
 	return function(done){
+		console.error("Engine Dependencies:", packageName, packageVersion);
+
 		var installString = packageName + "@" + packageVersion;
 		var args = ["install", installString];
 		var child = spawn("npm", args);

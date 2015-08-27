@@ -10,6 +10,9 @@
     "type": "git",
     "url": "https://github.com/bitovi/engine-dependencies.git"
   },
+  "bin": {
+    "install-engine-dependencies": "bin/install-engine-dependencies"
+  },
   "keywords": [
     "npm",
     "dependencies",
