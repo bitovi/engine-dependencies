@@ -10,6 +10,7 @@ var depTypes = { dependencies: true, devDependencies: true };
 
 var engineVersion = process.version;
 var app = engineVersion.substr(0, 3) === "v0." ? "node" : "iojs";
+var isWin = /^win/.test(process.platform);
 
 function engineDependencies(options, moduleName, callback){
 	if(typeof options === "string") {
@@ -119,13 +120,14 @@ function thunkAll(thunks, callback){
 	});
 }
 
+var npmCmd = isWin ? "npm.cmd" : "npm";
 function npmInstall(packageName, packageVersion){
 	return function(done){
 		console.error("Engine Dependencies:", packageName, packageVersion);
 
 		var installString = packageName + "@" + packageVersion;
 		var args = ["install", installString];
-		var child = spawn("npm", args);
+		var child = spawn(npmCmd, args);
 		child.stdout.pipe(process.stdout);
 		child.stderr.pipe(process.stderr);
 		child.on("exit", done);
