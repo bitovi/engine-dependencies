@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 var engineDependencies = require("../engine-dependencies");
 
+
 var argv = process.argv;
 var moduleName = argv[2];
-if(!moduleName && argv[1][0] !== "/") {
+if(!moduleName && argv[1][0] !== "/" && !isWindowsDrive(argv[1])) {
 	moduleName = argv[1];
 }
 if(!moduleName) {
@@ -12,6 +13,10 @@ if(!moduleName) {
 	} catch(e) {
 		moduleName = {};
 	}
+}
+
+function isWindowsDrive(p){
+    return /[A-Z]\:/.test(p);
 }
 
 engineDependencies(moduleName);
