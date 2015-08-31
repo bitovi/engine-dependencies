@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/bitovi/engine-dependencies.svg?branch=master)](https://travis-ci.org/bitovi/engine-dependencies)
+[![Build status](https://ci.appveyor.com/api/projects/status/yq4n7uwqj81osd5y/branch/master?svg=true)](https://ci.appveyor.com/project/matthewp/engine-dependencies/branch/master)
 [![npm version](https://badge.fury.io/js/engine-dependencies.svg)](http://badge.fury.io/js/engine-dependencies)
 
 # engine-dependencies
