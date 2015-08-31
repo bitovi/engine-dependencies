@@ -35,7 +35,8 @@ function engineDependencies(options, moduleName, callback){
 	// Get the package.json engineDependencies
 	if(!options) {
 		var cwd = findupNodeModules(moduleName) || process.cwd();
-		var pkg = require(cwd + "/package.json");
+		var pkgJsonPath = path.join(cwd, "package.json");
+		var pkg = require(pkgJsonPath);
 		options = pkg.engineDependencies;
 	}
 
