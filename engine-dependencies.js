@@ -1,6 +1,5 @@
 var semver = require("semver");
 var spawn = require("child_process").spawn;
-var findupNodeModules = require("findup-node-modules");
 var path = require("path");
 
 module.exports = engineDependencies;
@@ -12,30 +11,18 @@ var engineVersion = process.version;
 var app = engineVersion.substr(0, 3) === "v0." ? "node" : "iojs";
 var isWin = /^win/.test(process.platform);
 
-function engineDependencies(options, moduleName, callback){
-	if(typeof options === "string") {
-		moduleName = options;
-		options = undefined;
-	}
-	if(typeof moduleName === "function") {
-		callback = moduleName;
-		moduleName = undefined;
-	}
-
+function engineDependencies(options, callback){
 	// First see if we are in production
 	var installDevDependencies = process.env.NODE_ENV !== "production";
-	if(moduleName) {
-		// If we are inside a node_modules folder then do not install them.
-		installDevDependencies = !findupNodeModules(moduleName);
-		// We might be in the root folder for the project, check that
-		if(!installDevDependencies) {
-			installDevDependencies = path.dirname(process.cwd()) === moduleName;
-		}
+	if(installDevDependencies) {
+		// Make sure we are not inside of a node_modules folder
+		installDevDependencies = path.basename(path.dirname(process.cwd())) !==
+			"node_modules";
 	}
 
 	// Get the package.json engineDependencies
 	if(!options) {
-		var cwd = findupNodeModules(moduleName) || process.cwd();
+		var cwd = process.cwd();
 		var pkgJsonPath = path.join(cwd, "package.json");
 		var pkg = require(pkgJsonPath);
 		options = pkg.engineDependencies;
