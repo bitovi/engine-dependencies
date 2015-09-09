@@ -1,9 +1,10 @@
-﻿# Test against this version of Node.js
+# Test against this version of Node.js
 environment:
   matrix:
   # node.js
   - nodejs_version: "0.10"
   - nodejs_version: "0.12"
+  - nodejs_version: "4.0.0"
   # io.js
   # - nodejs_version: "1.0"
 
@@ -12,6 +13,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
+  - npm config set registry "http://registry.npmjs.org"
   - npm install
 
 # Post-install test scripts.
