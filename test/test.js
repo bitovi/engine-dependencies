@@ -2,7 +2,8 @@ var engineDependencies = require("../engine-dependencies");
 var assert = require("assert");
 
 var engineVersion = process.version;
-var app = engineVersion.substr(0, 3) === "v0." ? "node" : "iojs";
+var app = engineVersion.substr(0, 3) === "v0." ? "node" :
+	+engineVersion[1] >= 4 ? "node" : "iojs";
 var engineMajor = engineVersion.substr(0, 5);
 
 describe("Install dependency version based on engine used", function(){
@@ -16,6 +17,8 @@ describe("Install dependency version based on engine used", function(){
 			jqueryVersion = "1.11.2";
 		} else if(engineMajor === "v0.10") {
 			jqueryVersion = "1.11.0";
+		} else if(engineMajor === "v4.0.") {
+			jqueryVersion = "2.1.4";
 		}
 
 
@@ -28,6 +31,9 @@ describe("Install dependency version based on engine used", function(){
 				},
 				"0.12.x": {
 					"jquery": "1.11.2"
+				},
+				"^4.0.0": {
+					"jquery": "2.1.4"
 				}
 			},
 			"iojs": {
