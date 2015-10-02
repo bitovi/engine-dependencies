@@ -43,6 +43,7 @@ function engineDependencies(options, callback){
 
 	if(!dependencyOptions) {
 		callback(new Error("Unable to find options for this version of Node"));
+		return;
 	}
 
 	// Check to see if this is just version numbers or not
