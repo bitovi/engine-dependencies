@@ -1,6 +1,6 @@
 {
   "name": "engine-dependencies",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Install different versions of dependencies depending on which version of Node you are using",
   "main": "engine-dependencies.js",
   "scripts": {
