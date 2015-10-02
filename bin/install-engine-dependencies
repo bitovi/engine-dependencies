@@ -19,4 +19,4 @@ function isWindowsDrive(p){
     return /[A-Z]\:/.test(p);
 }
 
-engineDependencies(moduleName);
+engineDependencies(moduleName, function(){});
