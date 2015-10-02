@@ -41,6 +41,10 @@ function engineDependencies(options, callback){
 		return semver.satisfies(engineVersion, engineOption);
 	});
 
+	if(!dependencyOptions) {
+		callback(new Error("Unable to find options for this version of Node"));
+	}
+
 	// Check to see if this is just version numbers or not
 	var exampleDepType = Object.keys(dependencyOptions)[0];
 	if(depTypes[exampleDepType]) {
