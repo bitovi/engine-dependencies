@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-var engineDependencies = require("../engine-dependencies");
+var engineDependencies = require("../engine-dependencies"),
+	path = require("path");
 
 
 var argv = process.argv;
@@ -9,14 +10,14 @@ if(!moduleName && argv[1][0] !== "/" && !isWindowsDrive(argv[1])) {
 }
 if(!moduleName) {
 	try {
-		moduleName = require(process.cwd() + "/package.json").engineDependencies;
+		moduleName = require(path.join(process.cwd() + "package.json")).engineDependencies;
 	} catch(e) {
 		moduleName = {};
 	}
 }
 
 function isWindowsDrive(p){
-    return /[A-Z]\:/.test(p);
+    return /[A-Z]\:/i.test(p);
 }
 
 engineDependencies(moduleName, function(){});
