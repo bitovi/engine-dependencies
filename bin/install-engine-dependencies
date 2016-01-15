@@ -10,7 +10,7 @@ if(!moduleName && argv[1][0] !== "/" && !isWindowsDrive(argv[1])) {
 }
 if(!moduleName) {
 	try {
-		moduleName = require(path.join(process.cwd() + "package.json")).engineDependencies;
+		moduleName = require(path.join(process.cwd(), "package.json")).engineDependencies;
 	} catch(e) {
 		moduleName = {};
 	}
