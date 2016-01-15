@@ -6,7 +6,7 @@ var engineVersion = process.version;
 var app = engineVersion.substr(0, 3) === "v0." ? "node" :
 	+engineVersion[1] >= 4 ? "node" : "iojs";
 	
-var engineMajor = engineVersion.substr(0,2) === "v0." ?
+var engineMajor = engineVersion.substr(0,3) === "v0." ?
 	engineVersion.substr(0, 5) : engineVersion.replace(/\..*/,"");
 
 describe("Install dependency version based on engine used", function(){
