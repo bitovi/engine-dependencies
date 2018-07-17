@@ -39,9 +39,7 @@ And then add to your scripts:
 	"name": "my-lib",
 	"version": "1.0.0",
 	"scripts": {
-		"post-install": {
-			"install-engine-dependencies 'my-lib'"
-		}
+		"postInstall": "install-engine-dependencies my-lib"
 	}
 	...
 }
