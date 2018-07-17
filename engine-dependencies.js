@@ -8,8 +8,9 @@ var apps = { node: true, iojs: true };
 var depTypes = { dependencies: true, devDependencies: true };
 
 var engineVersion = process.version;
+var engineMajorVersion = +engineVersion.substr(1, engineVersion.indexOf(".") - 1);
 var app = engineVersion.substr(0, 3) === "v0." ? "node" :
-	+engineVersion[1] >= 4 ? "node" : "iojs";
+	engineMajorVersion >= 4 ? "node" : "iojs";
 var isWin = /^win/.test(process.platform);
 
 function engineDependencies(options, callback){
