@@ -28,6 +28,7 @@
     "mocha": "^2.2.5"
   },
   "dependencies": {
+    "jquery": "^3.0.0",
     "semver": "^5.0.1"
   }
 }
